@@ -1,4 +1,4 @@
-import {Label} from './label.model';
+import {Label} from '../../models/label.model';
 /**
  * The model type is generated from OpenAPI schema - candidate
  */

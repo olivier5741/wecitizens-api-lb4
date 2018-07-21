@@ -1,9 +1,9 @@
-import { Uuidentity } from './uuidentity.model';
-import { Label } from './label.model';
+import { Uuidentity } from '../../models/uuidentity.model';
+import { Label } from '../../models/label.model';
 import { ElectionDistrict } from './election-district.model';
 import { ElectionParty } from './election-party.model';
 import { Candidate } from './candidate.model';
-import { Translations } from './translations.model';
+import { Translations } from '../../models/translations.model';
 /**
  * The model type is generated from OpenAPI schema - election
  */

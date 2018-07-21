@@ -1,6 +1,6 @@
-import { SearchResponse } from './search-response.model';
+import { SearchResponse } from '../../models/search-response.model';
 import { ElectionParty } from './election-party.model';
-import { Translations } from './translations.model';
+import { Translations } from '../../models/translations.model';
 /**
  * The model type is generated from OpenAPI schema - party_search_response
  */

@@ -19,7 +19,7 @@ export class WecitizensApiApplication extends BootMixin(RestApplication) {
     this.bootOptions = {
       controllers: {
         // Customize ControllerBooter Conventions here
-        dirs: ['controllers','vote/controllers'],
+        dirs: ['controllers'],
         extensions: ['.controller.js'],
         nested: true,
       },

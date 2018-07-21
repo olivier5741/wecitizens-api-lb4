@@ -16,7 +16,7 @@ class WecitizensApiApplication extends boot_1.BootMixin(rest_1.RestApplication) 
         this.bootOptions = {
             controllers: {
                 // Customize ControllerBooter Conventions here
-                dirs: ['controllers', 'vote/controllers'],
+                dirs: ['controllers'],
                 extensions: ['.controller.js'],
                 nested: true,
             },
