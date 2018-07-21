@@ -6,6 +6,9 @@
     "test",
     "index.ts"
   ],
+  "compilerOptions": {
+    "strictNullChecks": false
+  },
   "exclude": [
     "node_modules/**",
     "packages/*/node_modules/**",
