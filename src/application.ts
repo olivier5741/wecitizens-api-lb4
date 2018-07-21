@@ -4,10 +4,24 @@ import {MySequence} from './sequence';
 
 /* tslint:disable:no-unused-variable */
 // Binding and Booter imports are required to infer types for BootMixin!
-import {BootMixin, Booter, Binding} from '@loopback/boot';
+import {
+  BootMixin, 
+    Booter, 
+    Binding
+} from '@loopback/boot';
 /* tslint:enable:no-unused-variable */
 
-export class WecitizensApiApplication extends BootMixin(RestApplication) {
+import {
+    Class,
+    Repository,
+    RepositoryMixin,
+    juggler,
+} from '@loopback/repository';
+
+import {ElectionController} from "./vote/controllers";
+
+export class WecitizensApiApplication extends BootMixin(
+    RepositoryMixin(RestApplication)) {
   constructor(options?: ApplicationConfig) {
     super(options);
 
@@ -24,6 +38,8 @@ export class WecitizensApiApplication extends BootMixin(RestApplication) {
         nested: true,
       },
     };
+    
+    this.controller(ElectionController)
   }
 
   async start() {
