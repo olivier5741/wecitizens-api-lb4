@@ -6,30 +6,16 @@ import {model, property} from '@loopback/repository';
  */
 @model({name: 'translations'})
 export class Translations {
-  constructor(data?: Partial<Translations>) {
-    if (data != null && typeof data === 'object') {
-      Object.assign(this, data);
+    constructor(data?: Partial<Translations>) {
+        if (data != null && typeof data === 'object') {
+            Object.assign(this, data);
+        }
     }
-  }
 
-  /**
-   * Scoped translations
-   */
-  @property({name: 'i18n'})
-  i18n?: {
-  en?: {
-  
-};
-  nl?: {
-  
-};
-  fr?: {
-  
-};
-  de?: {
-  
-};
-};
-
+    /**
+     * Scoped translations
+     */
+    @property({name: 'i18n'})
+    i18n?: {}
 }
 

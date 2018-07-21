@@ -2,8 +2,9 @@
 import {operation, param} from '@loopback/rest';
 import {Election} from '../models/election.model';
 import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {repository, juggler, Command, Connector, AnyObject} from '@loopback/repository';
 import {ElectionRepository, ElectionDb} from '../../repositories';
+import * as moment from 'moment';
 
 /**
  * The controller class is generated from OpenAPI spec with operations tagged
@@ -11,7 +12,8 @@ import {ElectionRepository, ElectionDb} from '../../repositories';
  *
  */
 export class ElectionController {
-    constructor(@repository(ElectionRepository) public repository: ElectionRepository) {
+    constructor(@repository(ElectionRepository) public repository: ElectionRepository,
+                @inject('datasources.poldir') public datasource: juggler.DataSource) {
     }
 
     /**
@@ -19,12 +21,48 @@ export class ElectionController {
      */
     @operation('get', '/vote/election/{key}')
     async voteElectionGet(@param({name: 'key', in: 'path'}) key: string): Promise<Election> {
-        let e = await this.repository.findById(1);
-        return new Promise<Election>((resolve => resolve(
-            {
-                id: e.id.toString(),
-                key: e.year + "_be_municipal"
-            })))
+
+        const q = "SELECT \n" +
+            "    e.id AS 'id',\n" +
+            "    e.Date AS 'date',\n" +
+            "    e.year AS 'year',\n" +
+            "    e.available AS 'available',\n" +
+            "    ei.id_lang AS 'i18nLanguage',\n" +
+            "    ei.name AS 'i18nTranslation'\n" +
+            "FROM\n" +
+            "    election e\n" +
+            "        JOIN\n" +
+            "    election_texts ei ON e.id = ei.id_election\n" +
+            "WHERE\n" +
+            "    e.id_parent IS NULL and e.id = 1";
+
+        //let e = await this.repository.findById(1);
+        return new Promise<Election>((resolve =>
+            this.datasource.connector.execute(q, [], {}, function (err: any, rows: any) {
+                    let data = rows[0];
+                    let result = {
+                        id: data.id,
+                        key: data.year + "_be_municipal",
+                        type: "be_municipal",
+                        type_name: "election_type_be_municipal_name",
+                        date: new Date(moment(data.date).format("YYYY-MM-DD")),
+                        district_type: "municipality"
+                    } as Election;
+                    
+                    let i18n : { [id: string] : { [id: string] : string; }; } = {};
+                    
+                    for (let r of rows) {
+                        if (i18n.hasOwnProperty(r.i18nLanguage) == false)
+                            i18n[r.i18nLanguage] = {};
+                        i18n[r.i18nLanguage][result.type_name] = r.i18nTranslation;
+                    }
+                    
+                    result.i18n = i18n;
+                    
+                    resolve(result);
+                }
+            )));
+
     }
 
     /**

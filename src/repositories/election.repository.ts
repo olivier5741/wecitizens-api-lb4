@@ -1,5 +1,6 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {inject} from '@loopback/core';
+import {ElectionDb} from "./electionDb";
 
 export class ElectionRepository extends DefaultCrudRepository<
     ElectionDb,
@@ -12,13 +13,3 @@ export class ElectionRepository extends DefaultCrudRepository<
     }
 }
 
-import {Entity, model, property} from '@loopback/repository';
-
-@model({name: "election"})
-export class ElectionDb extends Entity {
-    @property({id: true})
-    id: number;
-
-    @property({required: false})
-    year: string;
-}

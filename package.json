@@ -54,7 +54,8 @@
     "@loopback/openapi-v3": "^0.10.12",
     "@loopback/repository": "^0.12.1",
     "@loopback/rest": "^0.15.1",
-    "loopback-connector-mysql": "^2.4.1"
+    "loopback-connector-mysql": "^2.4.1",
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "@loopback/build": "^0.6.11",
